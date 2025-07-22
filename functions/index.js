@@ -1,6 +1,6 @@
 const { Telegraf, Markup } = require('telegraf');
-const { onRequest } = require("firebase-functions/v2/https");
-const logger = require("firebase-functions/logger");
+// const { onRequest } = require("firebase-functions/v2/https");
+// const logger = require("firebase-functions/logger");
 require("dotenv/config");
 
 const bot = new Telegraf(process.env.TELEGRAM_BOT_API);
@@ -51,11 +51,13 @@ bot.on('text', ctx => {
   bot.telegram.sendMessage(process.env.ADMIN_CHAT_ID, `📩 <b>Новая заявка на тренировку:</b>\n\n👤 От: ${username}\n📝 Запрос: ${request}`, {parse_mode: 'HTML'});
 });
 
-exports.trainingBot = onRequest((request, response) => {
-    logger.info("Incoming message", request.body);
+bot.launch().then(() => console.log('Bot started'));
+
+// exports.trainingBot = onRequest((request, response) => {
+//     logger.info("Incoming message", request.body);
     
-    return bot.handleUpdate(request.body, response).then((rv) => {
-        return !rv && response.sendStatus(200);
-    });
-})
+//     return bot.handleUpdate(request.body, response).then((rv) => {
+//         return !rv && response.sendStatus(200);
+//     });
+// })
 
